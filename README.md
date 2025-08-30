@@ -15,4 +15,4 @@ A página é o quinto projeto no programa de desenvolvimento web da TripleTen. E
 - Cards com imagens
 - Javascritp para exclusão de cards, inserção de cards, botão like
 
-link para acesso: https://ronesjunior.github.io/sprint_8_tripleten/index.html
+link para acesso: https://ronesjunior.github.io/sprint_8_tripleten/
