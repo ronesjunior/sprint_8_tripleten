@@ -1,4 +1,4 @@
-// Abrir popup para editar nome e sobre mim
+// ABRIR POPUP PARA EDITAR O NOME E SOBRE MIM
 
 const popup = document.querySelector(".popup");
 const editBotao = document.querySelector(".profile__image-button");
@@ -16,7 +16,7 @@ editBotao.addEventListener("click", abrirPopup);
 fecharBotao.addEventListener("click", fecharPopup);
 
 ///////////////////////////////////////////////////////////////////////////
-// Alterar nome e sobre mim quando clicar no botão salvar do popup
+// ALTERAR O NOME E O SOBRE MIM DO POPUUP
 
 let formElement = document.querySelector("#popup__form");
 
@@ -41,7 +41,7 @@ function AlterarPerfilFormSubmit(evt) {
 formElement.addEventListener("submit", AlterarPerfilFormSubmit); // Conecta a função ao formulário
 
 ///////////////////////////////////////////////////////////////////////////
-// Botão "like" da section "element" mudar a cor para black quando clicado
+// MUDAR A COR DO BOTÃO 'LIKE' PARA PRETO DA SECTION ELEMENT
 
 const likeButtons = document.querySelectorAll(".element__like-button");
 
@@ -80,27 +80,14 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
   },
 ];
+
 /////////////////////////////////////////////////////////////////////////////////////
-// Excluir card do container
+// ABRIR POPUP PARA INSERIR IMAGENS (CARD)
 
-const cardsContainer = document.querySelector(".elements");
+const addButton = document.querySelector(".profile__add-image");
+const closeButton = document.querySelector(".popup-add-card__fechar-botao");
+const popupcard = document.querySelector(".popup-add-card");
 
-cardsContainer.addEventListener("click", function (evt) {
-  // Verifica se o clique foi no botão de exclusão
-  if (evt.target.classList.contains("element__lixeira-icon")) {
-    // verifica se na classe .elements existe um botão com a classe .element__delete-button
-    // Encontra o cartão pai e remove
-    const cardToDelete = evt.target.closest(".element"); // acha o ancestral <div> mais próximo com a classe .element e grava na variável cardToDelete
-    cardToDelete.remove(); // exclui todo o ancestral <div>
-  }
-});
-
-// Primeiro, precisamos selecionar os elementos para incluir cards
-const addButton = document.querySelector(".profile__add-image"); // botão para abrir modal
-const closeButton = document.querySelector(".popup-add-card__fechar-botao"); // botão fecha o modal
-const popupcard = document.querySelector(".popup-add-card"); // modal
-
-// Depois, criar a função que abre o popup
 function openPopup() {
   popupcard.style.display = "flex";
 }
@@ -109,17 +96,27 @@ function closePopup() {
   popupcard.style.display = "none";
 }
 
-// Por fim, conectar o botão à função
 addButton.addEventListener("click", openPopup);
 closeButton.addEventListener("click", closePopup);
 
 ///////////////////////////////////////////////////////////////////////////
-// Adicionar card no container
+// EXCLUIR IMAGEM (CARD) NO CONTAINER
+
+const cardsContainer = document.querySelector(".elements");
+
+cardsContainer.addEventListener("click", function (evt) {
+  if (evt.target.classList.contains("element__lixeira-icon")) {
+    const cardToDelete = evt.target.closest(".element");
+    cardToDelete.remove();
+  }
+});
+/////////////////////////////////////////////////////////////////////////////////////
+// ADICIONAR IMAGEM (CARD) NO CONTAINER
 
 const form = document.querySelector("#popup-add-card__form");
-const containerCards = document.querySelector(".elements"); // div onde ficam os cards
+const containerCards = document.querySelector(".elements");
+const popupImage = document.querySelector("popup_type_image");
 
-// Função que cria e insere card no container
 function criarCard(titulo, imagem) {
   const card = document.createElement("div");
   card.classList.add("element");
@@ -136,18 +133,56 @@ function criarCard(titulo, imagem) {
     </div>
   `;
 
-  containerCards.prepend(card); // adiciona o card no topo
+  function openImagePopup(imageSrc, imageAlt) {
+    const imagePopup = document.querySelector(".popup_type_image");
+    const popupImage = imagePopup.querySelector(".popup__image");
+    const popupCaption = imagePopup.querySelector(".popup__caption");
+
+    popupImage.src = imageSrc;
+    popupImage.alt = imageAlt;
+    popupCaption.textContent = imageAlt;
+
+    openPopup(imagePopup);
+  }
+
+  function openImage() {
+    const imagePopup = document.querySelector(".popup_type_image");
+    imagePopup.classList.add("popup_opened");
+  }
+
+  // EVENT LISTENER PARA MUDAR A COR DO BOTÃO LIKE DO INNERHTML CRIADO
+  const likeButton = card.querySelector(".element__like-button");
+
+  likeButton.addEventListener("click", function () {
+    likeButton.classList.toggle("element__like-icon_active");
+  });
+
+  // EVENT LISTENER PARA ABRIR POPUP DE IMAGEM
+  const cardImage = card.querySelector(".element__image");
+  cardImage.addEventListener("click", function () {
+    const imagePopup = document.querySelector(".popup_type_image");
+    const popupImage = imagePopup.querySelector(".popup__image");
+    const popupCaption = imagePopup.querySelector(".popup__caption");
+
+    popupImage.src = imagem;
+    popupImage.alt = titulo;
+    popupCaption.textContent = titulo;
+
+    openImage(imagePopup);
+  });
+
+  containerCards.prepend(card);
 }
 
-// Evento submit do formulário do popup
+// EVENT LISTENER PARA SUBMIT DO FORMULÁRIO POPUP DE ADIÇÃO DE IMAGEM (CARD)
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // evita recarregar a página
 
   const titulo = form.titulo.value;
   const link = form.link.value;
 
-  criarCard(titulo, link); // cria o card
+  criarCard(titulo, link);
 
-  form.reset(); // limpa o formulário
-  popupcard.style.display = "none"; // fecha popup
+  form.reset();
+  popupcard.style.display = "none";
 });

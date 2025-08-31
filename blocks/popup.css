@@ -24,7 +24,7 @@
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 }
 
-.popup__titlo {
+.popup__titulo {
   font-size: 24px;
   font-weight: 900;
   line-height: 29px;
@@ -105,7 +105,9 @@ input {
 }
 
 .popup__salvar-botao:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #000000;
+  color: #ffffff;
+  opacity: 0.8;
 }
 
 @media (max-width: 550px) {
@@ -151,6 +153,14 @@ input {
   }
 
   .popup__salvar-botao:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000000;
+    color: #ffffff;
+    opacity: 0.8;
   }
+}
+
+.popup__image {
+  max-width: 75vw;
+  max-height: 75vh;
+  object-fit: contain;
 }

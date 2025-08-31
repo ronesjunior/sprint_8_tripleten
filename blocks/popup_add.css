@@ -95,7 +95,7 @@ input {
   margin-top: 48px;
   width: 358px;
   height: 50.15px;
-  background-image: url("../images/Submit_Button.png");
+  background-image: url("../images/Submit_escuro.svg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -105,7 +105,9 @@ input {
 }
 
 .popup-add-card__criar-botao:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #000000;
+  color: #ffffff;
+  opacity: 0.8;
 }
 
 @media (max-width: 550px) {
@@ -141,7 +143,7 @@ input {
     margin-top: 48px;
     width: 100%;
     height: 50.15px;
-    background-image: url("../images/Submit_Button.png");
+    background-image: url("../images/Submit_escuro.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -151,6 +153,12 @@ input {
   }
 
   .popup-add-card__criar-botao:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000000;
+    color: #ffffff;
+    opacity: 0.8;
   }
+}
+
+.popup_opened {
+  display: block; /* ou flex - popup visível */
 }
