@@ -13,6 +13,6 @@ A página é o quinto projeto no programa de desenvolvimento web da TripleTen. E
 - Pseudoclasse (hover, active)
 - Javascript (addEventListener, querySelector, textContent). Ação de botão para abertura de popup com formulários para alteração de textcontent
 - Cards com imagens
-- Javascritp para exclusão de cards, inserção de cards, botão like
+- Javascritp para exclusão de cards, inserção de cards, botão like, popup de card, popup formulários
 
 link para acesso: https://ronesjunior.github.io/sprint_8_tripleten/

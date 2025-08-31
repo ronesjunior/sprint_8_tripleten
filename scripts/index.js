@@ -1,7 +1,7 @@
 // ABRIR POPUP PARA EDITAR O NOME E SOBRE MIM
 
 const popup = document.querySelector(".popup");
-const editBotao = document.querySelector(".profile__image-button");
+const editBotao = document.querySelector(".profile__square");
 const fecharBotao = document.querySelector(".popup__fechar-botao");
 
 function abrirPopup() {
@@ -53,38 +53,9 @@ likeButtons.forEach((button) => {
 });
 
 /////////////////////////////////////////////////////////////////////////////
-
-const initialCards = [
-  {
-    name: "Vale de Yosemite",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-  },
-  {
-    name: "Lago Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-  },
-  {
-    name: "Montanhas Carecas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
-  },
-  {
-    name: "Parque Nacional da Vanoise ",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
-  },
-];
-
-/////////////////////////////////////////////////////////////////////////////////////
 // ABRIR POPUP PARA INSERIR IMAGENS (CARD)
 
-const addButton = document.querySelector(".profile__add-image");
+const addButton = document.querySelector(".profile__add-button");
 const closeButton = document.querySelector(".popup-add-card__fechar-botao");
 const popupcard = document.querySelector(".popup-add-card");
 
@@ -115,7 +86,6 @@ cardsContainer.addEventListener("click", function (evt) {
 
 const form = document.querySelector("#popup-add-card__form");
 const containerCards = document.querySelector(".elements");
-const popupImage = document.querySelector("popup_type_image");
 
 function criarCard(titulo, imagem) {
   const card = document.createElement("div");
@@ -133,45 +103,46 @@ function criarCard(titulo, imagem) {
     </div>
   `;
 
-  function openImagePopup(imageSrc, imageAlt) {
-    const imagePopup = document.querySelector(".popup_type_image");
-    const popupImage = imagePopup.querySelector(".popup__image");
-    const popupCaption = imagePopup.querySelector(".popup__caption");
-
-    popupImage.src = imageSrc;
-    popupImage.alt = imageAlt;
-    popupCaption.textContent = imageAlt;
-
-    openPopup(imagePopup);
-  }
-
-  function openImage() {
-    const imagePopup = document.querySelector(".popup_type_image");
-    imagePopup.classList.add("popup_opened");
-  }
-
   // EVENT LISTENER PARA MUDAR A COR DO BOTÃO LIKE DO INNERHTML CRIADO
   const likeButton = card.querySelector(".element__like-button");
+  const popupImage_novo = document.querySelector(".popup-img__type_image");
+  const popupImg_novo = popupImage_novo.querySelector(".popup-img__image");
+  const popupCaption_novo = popupImage_novo.querySelector(
+    ".popup-img__caption"
+  );
+  const popupClose_novo = popupImage_novo.querySelector(".popup-img__close");
 
   likeButton.addEventListener("click", function () {
     likeButton.classList.toggle("element__like-icon_active");
   });
 
-  // EVENT LISTENER PARA ABRIR POPUP DE IMAGEM
-  const cardImage = card.querySelector(".element__image");
-  cardImage.addEventListener("click", function () {
-    const imagePopup = document.querySelector(".popup_type_image");
-    const popupImage = imagePopup.querySelector(".popup__image");
-    const popupCaption = imagePopup.querySelector(".popup__caption");
-
-    popupImage.src = imagem;
-    popupImage.alt = titulo;
-    popupCaption.textContent = titulo;
-
-    openImage(imagePopup);
-  });
-
   containerCards.prepend(card);
+
+  // EVENT LISTENER PARA ABRIR A IMAGEM NA TELA
+  // Função para abrir popup
+  function openPopup_img(imgSrc, imgAlt, captionText) {
+    popupImg_novo.src = imgSrc;
+    popupImg_novo.alt = imgAlt;
+    popupCaption_novo.textContent = captionText;
+    popupImage_novo.classList.add("popup-img__opened_img");
+
+    // Função para fechar popup
+    function closePopup_img() {
+      popupImage_novo.classList.remove("popup-img__opened_img");
+    }
+
+    // Evento de fechar
+    popupClose_novo.addEventListener("click", closePopup_img);
+  }
+
+  document.querySelectorAll(".element__image").forEach((img) => {
+    img.addEventListener("click", () => {
+      // Pegando a legenda do título do card
+      const card = img.closest(".element");
+      const title = card.querySelector(".element__title").textContent;
+      openPopup_img(img.src, img.alt, title);
+    });
+  });
 }
 
 // EVENT LISTENER PARA SUBMIT DO FORMULÁRIO POPUP DE ADIÇÃO DE IMAGEM (CARD)
@@ -185,4 +156,79 @@ form.addEventListener("submit", (event) => {
 
   form.reset();
   popupcard.style.display = "none";
+});
+
+////////////////////////////////////////////////////////////////////////////////
+//ABRIR O POPUP PARA VISUALIZAR A IMAGEM JÁ EXISTENTE
+
+const popupImage = document.querySelector(".popup-img__type_image");
+const popupImg = popupImage.querySelector(".popup-img__image");
+const popupCaption = popupImage.querySelector(".popup-img__caption");
+const popupClose = popupImage.querySelector(".popup-img__close");
+
+// Função para abrir popup
+function openPopup_img(imgSrc, imgAlt, captionText) {
+  popupImg.src = imgSrc;
+  popupImg.alt = imgAlt;
+  popupCaption.textContent = captionText;
+  popupImage.classList.add("popup-img__opened_img");
+}
+
+// Função para fechar popup
+function closePopup_img() {
+  popupImage.classList.remove("popup-img__opened_img");
+}
+
+// Evento de fechar
+popupClose.addEventListener("click", closePopup_img);
+
+// Abre o popup ao clicar na imagem do card
+document.querySelectorAll(".element__image").forEach((img) => {
+  img.addEventListener("click", () => {
+    // Pegando a legenda do título do card
+    const card = img.closest(".element");
+    const title = card.querySelector(".element__title").textContent;
+    openPopup_img(img.src, img.alt, title);
+  });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+// CRIAR OS CARDS ATRAVÉS DO VETOR initialCards
+
+const initialCards = [
+  {
+    name: "Vale de Yosemite",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
+  },
+  {
+    name: "Lago Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
+  },
+  {
+    name: "Montanhas Carecas",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
+  },
+  {
+    name: "Parque Nacional da Vanoise ",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
+  },
+];
+
+const imagens = document.querySelectorAll(".element__image");
+const titulos = document.querySelectorAll(".element__title");
+
+initialCards.forEach((card, index) => {
+  if (imagens[index] && titulos[index]) {
+    // checa se existem elementos
+    imagens[index].src = card.link;
+    titulos[index].textContent = card.name;
+  }
 });
